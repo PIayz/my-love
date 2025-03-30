@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Para Meu Amor 💖</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #ffdde1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            animation: bgChange 3s infinite alternate;
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, #ff9a9e, #fad0c4);
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+        }
+        input {
+            width: 95%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .btn {
+            padding: 10px 20px;
+            background: #ff477e;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background: #ff2e63;
+        }
+        .hidden {
+            display: none;
+        }
+        .loading {
+            font-size: 20px;
+            color: #ff477e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .loading i {
+            animation: spin 1s infinite linear;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .progress-container {
+            width: 80%;
+            background: #f3f3f3;
+            margin: 20px auto;
+            border-radius: 10px;
+            height: 10px;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: #ff477e;
+            border-radius: 10px;
+        }
+        .waiting-message {
+            font-size: 18px;
+            color: #ff477e;
+            margin-top: 20px;
+        }
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 90%;
+            text-align: left;
+            color: #ff477e;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            animation: fadeIn 2s;
+        }
+        .close {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .modal-content h3 {
+            margin-top: 0;
+        }
+        /* Animações */
+        @keyframes bgChange {
+            0% { background: #ffdde1; }
+            100% { background: #fad0c4; }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    
+    <div class="container" id="login-container">
+        <h2>💖 Bem-vinda, meu amor 💖</h2>
+        <input type="text" id="username" placeholder="Usuário">
+        <input type="password" id="password" placeholder="Senha">
+        <button class="btn" onclick="checkLogin()">Entrar</button>
+    </div>
+    
+    <div class="container hidden" id="content-container">
+        <h1>Para o amor da minha vida 💖</h1>
+        <p class="typed-text"></p>
+        <button class="btn" onclick="showMessage()">Não Clique</button>
+
+        <div id="progress-container" class="hidden progress-container">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+        <div id="waiting-message" class="hidden waiting-message"></div>
+    </div>
+
+    <!-- Modal de mensagem -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        var typed;
+        function startTyped() {
+            typed = new Typed('.typed-text', {
+                strings: ["Saiba que você é a minha felicidade...", "Saiba que cada momento com você é especial...", "Saiba que eu vou casar com você 💍", "Saiba que sem você, não existe solidão", "Saiba que EU TE AMOOOO 💕"],
+                typeSpeed: 70,
+                backSpeed: 25,
+                loop: true
+            });
+        }
+
+        function checkLogin() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            
+            if (user === "Andressa" && pass === "01022025") {
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('content-container').classList.remove('hidden');
+                startTyped();
+                
+                // Exibe modal com a mensagem de sucesso
+                showModal("<h3>Login realizado com sucesso! 🎉</h3><p>Agora, você pode ver a surpresa que preparei para você! 💖</p>");
+                
+                // Fecha o modal após 4 segundos
+                setTimeout(closeModal, 4000);
+                
+            } else {
+                showModal("<h3>Opaa!</h3><p>Meu amor, verifique se você digitou o usuário e senha certinho 😉</p>");
+            }
+        }
+
+        function showMessage() {
+            const button = document.querySelector('#content-container .btn');
+            const progressBar = document.getElementById('progress-bar');
+            const progressContainer = document.getElementById('progress-container');
+            const waitingMessage = document.getElementById('waiting-message');
+
+            button.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Carregando...</div>';
+            progressContainer.classList.remove('hidden');
+            waitingMessage.classList.remove('hidden');
+
+            let width = 0;
+            const interval = setInterval(function() {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    button.innerHTML = 'Clique para uma surpresa!';
+                    progressContainer.classList.add('hidden');
+                    waitingMessage.classList.add('hidden');
+
+                    showModal(`
+                        <h3>Meu Amor, Meu Orgulho</h3>
+                        <p>Meu amor, você é a luz que brilha em meu caminho,</p>
+                        <p>A pessoa mais incrível que o destino me trouxe.</p>
+                        <p>Cada sorriso seu é um farol, guiando-me no infinito,</p>
+                        <p>E cada abraço seu, um refúgio onde me encontrei.</p>
+                        <p>Tenho orgulho do ser maravilhoso que você é,</p>
+                        <p>Da força que você carrega, da beleza do seu ser.</p>
+                        <p>Cada dia ao seu lado é um presente que não posso medir,</p>
+                        <p>E a certeza que o futuro será perfeito ao seu lado, posso crer.</p>
+                        <p>Estou ansioso pelo que nos aguarda,</p>
+                        <p>Por tudo que vamos viver e construir,</p>
+                        <p>Porque ao seu lado, meu coração se acalma,</p>
+                        <p>E é com você que quero toda a minha vida seguir.</p>
+                        <p>Cada momento com você é um tesouro imenso,</p>
+                        <p>E ao seu lado, sei que encontrarei a paz.</p>
+                        <p>Quero, mais que tudo, passar a eternidade ao seu lado,</p>
+                        <p>Porque com você, cada instante é único, cada instante é capaz.</p>
+                        <h1>🖤 EU TE AMO MUITO 💙</h1>
+                    `);
+                } else {
+                    width++;
+                    progressBar.style.width = width + '%';
+                }
+            }, 100); // 10 segundos (100ms * 100)
+        }
+
+        function showModal(content) {
+            document.getElementById('modal-body').innerHTML = content;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {"value": 50},
+                "shape": {"type": "circle"},
+                "size": {"value": 5},
+                "move": {"speed": 2}
+            }
+        });
+    </script>
+</body>
+</html>
